@@ -1,0 +1,8 @@
+.addForm {
+    margin: 0 auto;
+    padding: 1rem;
+    /*width: 50%;*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
