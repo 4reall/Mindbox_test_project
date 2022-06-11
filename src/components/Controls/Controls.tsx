@@ -8,30 +8,53 @@ import {
 
 import styles from './controls.module.css';
 import { useState, MouseEvent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Filters, IStore } from '../../types';
+import {
+	changeFilter,
+	clearCompleted,
+	updateActiveTodosLeft,
+} from '../../reducers/todosSlice';
 
-const Controls = () => {
-	const [alignment, setAlignment] = useState('left');
+interface ControlsProps {
+	todosLeft: number;
+}
+
+const Controls = ({ todosLeft }: ControlsProps) => {
+	const { activeFilter, activeTodosLeft } = useSelector(
+		(state: IStore) => state
+	);
+	// const [alignment, setAlignment] = useState(Filters.ALL);
+	const dispatch = useDispatch();
 
 	const handleChange = (
 		event: MouseEvent<HTMLElement>,
-		newAlignment: string
+		newFilter: Filters
 	) => {
-		setAlignment(newAlignment);
+		dispatch(changeFilter(newFilter));
 	};
 
 	return (
 		<Box className={styles.controls}>
-			<Typography component={'div'}>2 items lefts</Typography>
+			<Typography
+				variant="button"
+				component={'div'}
+				sx={{ height: 'max-content' }}
+			>
+				{activeTodosLeft} todos left
+			</Typography>
 			<ToggleButtonGroup
 				onChange={handleChange}
 				exclusive
-				value={alignment}
+				value={activeFilter}
 			>
-				<ToggleButton value={'left'}>All</ToggleButton>
-				<ToggleButton value={'justify'}>Active</ToggleButton>
-				<ToggleButton value={'right'}>Completed</ToggleButton>
+				<ToggleButton value={Filters.ALL}>All</ToggleButton>
+				<ToggleButton value={Filters.ACTIVE}>Active</ToggleButton>
+				<ToggleButton value={Filters.COMPLETED}>Completed</ToggleButton>
 			</ToggleButtonGroup>
-			<Button>Clear Completed</Button>
+			<Button onClick={() => dispatch(clearCompleted())}>
+				Clear Completed
+			</Button>
 		</Box>
 	);
 };

@@ -1,0 +1,14 @@
+.todoEnter {
+    opacity: 0;
+}
+.todoEnterActive {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+}
+.todoExit {
+    opacity: 1;
+}
+.todoExitActive {
+    opacity: 0;
+    transition: opacity 500ms ease-in;
+}

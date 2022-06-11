@@ -4,19 +4,20 @@ import styles from './addForm.module.css';
 import { Form, Formik } from 'formik';
 import Input from '../UI/Input/Input';
 import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { addTodo, updateActiveTodosLeft } from '../../reducers/todosSlice';
 
 const AddForm = () => {
+	const dispatch = useDispatch();
+
 	return (
-		// <Box className={}>
-		// 	<TextField
-		// 		id="standard-basic"
-		// 		label="Standard"
-		// 		variant="standard"
-		// 	/>
-		// </Box>
 		<Formik
 			initialValues={{ todo: '' }}
-			onSubmit={(values) => console.log(values)}
+			onSubmit={(values, formikHelpers) => {
+				dispatch(addTodo(values.todo));
+				dispatch(updateActiveTodosLeft());
+				formikHelpers.resetForm();
+			}}
 			validationSchema={Yup.object({
 				todo: Yup.string()
 					.min(5, 'Minimal length is 5 characters')
