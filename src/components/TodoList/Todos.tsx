@@ -12,7 +12,6 @@ interface TodosProps {
 }
 
 const Todos = ({ todos, activeFilter, handleToggle }: TodosProps) => {
-	console.log('123');
 	const filteredTodos = todos.filter(
 		(todo) =>
 			activeFilter === Filters.ALL ||

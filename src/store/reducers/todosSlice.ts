@@ -1,32 +1,6 @@
 import { Filters, IStore, ITodo } from '../../types';
 import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
 
-// const initialState: IStore = {
-// 	activeTodosLeft: 2,
-// 	activeFilter: Filters.ALL,
-// 	todos: [
-// 		{
-// 			value: '123',
-// 			id: '1',
-// 			completed: true,
-// 		},
-// 		{
-// 			value: '16744',
-// 			id: '2',
-// 			completed: false,
-// 		},
-// 		{
-// 			value: '345345',
-// 			id: '3',
-// 			completed: true,
-// 		},
-// 		{
-// 			value: '76',
-// 			id: '4',
-// 			completed: false,
-// 		},
-// 	],
-// };
 const initialState: IStore = {
 	// я не хотел выносить
 	activeTodosLeft: 0,
