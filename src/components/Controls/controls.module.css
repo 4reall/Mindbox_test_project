@@ -4,3 +4,9 @@
     justify-items: center;
     align-items: center;
 }
+@media screen and (max-width: 48em) {
+    .controls {
+        grid-template-columns: 1fr;
+        row-gap: 1rem;
+    }
+}

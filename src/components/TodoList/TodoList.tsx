@@ -4,7 +4,10 @@ import TodoListItem from '../TodoListItem/TodoListItem';
 import { Divider, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { Filters, IStore, ITodo } from '../../types';
-import { toggleStatus, updateActiveTodosLeft } from '../../reducers/todosSlice';
+import {
+	toggleStatus,
+	updateActiveTodosLeft,
+} from '../../store/reducers/todosSlice';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import styles from './todoList.module.css';
@@ -16,8 +19,6 @@ interface TodoListProps {
 const TodoList = ({ setTodosLeft }: TodoListProps) => {
 	const { activeFilter, todos } = useSelector((state: IStore) => state);
 	const dispatch = useDispatch();
-
-	const [checked, setChecked] = useState([0]);
 
 	const handleToggle = (id: string) => () => {
 		dispatch(toggleStatus(id));
@@ -35,13 +36,14 @@ const TodoList = ({ setTodosLeft }: TodoListProps) => {
 		if (filteredTodos.length === 0) {
 			return (
 				<CSSTransition
+					exit={false}
 					timeout={500}
-					// classNames={{
-					// 	enter: styles.todoEnter,
-					// 	enterActive: styles.todoEnterActive,
-					// 	exit: styles.todoExit,
-					// 	exitActive: styles.todoExitActive,
-					// }}
+					classNames={{
+						enter: styles.todoEnter,
+						enterActive: styles.todoEnterActive,
+						exit: styles.todoExit,
+						exitActive: styles.todoExitActive,
+					}}
 				>
 					<Typography variant="h4" component="div" align="center">
 						There are no todos here
@@ -52,6 +54,7 @@ const TodoList = ({ setTodosLeft }: TodoListProps) => {
 
 		return filteredTodos.map(({ id, value, completed }) => (
 			<CSSTransition
+				exit={false}
 				key={id}
 				timeout={500}
 				classNames={{
@@ -60,7 +63,6 @@ const TodoList = ({ setTodosLeft }: TodoListProps) => {
 					exit: styles.todoExit,
 					exitActive: styles.todoExitActive,
 				}}
-				// classNames={'item'}
 			>
 				<>
 					<TodoListItem

@@ -1,4 +1,4 @@
-import { Filters, IStore, ITodo } from '../types';
+import { Filters, IStore, ITodo } from '../../types';
 import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
 
 // const initialState: IStore = {

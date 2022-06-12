@@ -6,7 +6,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItem from '@mui/material/ListItem';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { toggleStatus } from '../../reducers/todosSlice';
+import { toggleStatus } from '../../store/reducers/todosSlice';
 
 interface TodoListItemProps {
 	value: string;
@@ -19,6 +19,7 @@ const TodoListItem = ({ value, handleToggle, checked }: TodoListItemProps) => {
 
 	return (
 		<ListItem
+			data-testid={'todo'}
 			key={value}
 			secondaryAction={
 				<IconButton edge="end" aria-label="comments"></IconButton>

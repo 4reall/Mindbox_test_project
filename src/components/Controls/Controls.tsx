@@ -14,7 +14,7 @@ import {
 	changeFilter,
 	clearCompleted,
 	updateActiveTodosLeft,
-} from '../../reducers/todosSlice';
+} from '../../store/reducers/todosSlice';
 
 interface ControlsProps {
 	todosLeft: number;
@@ -24,7 +24,6 @@ const Controls = ({ todosLeft }: ControlsProps) => {
 	const { activeFilter, activeTodosLeft } = useSelector(
 		(state: IStore) => state
 	);
-	// const [alignment, setAlignment] = useState(Filters.ALL);
 	const dispatch = useDispatch();
 
 	const handleChange = (

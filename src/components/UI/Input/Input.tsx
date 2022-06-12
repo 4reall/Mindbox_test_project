@@ -12,13 +12,18 @@ const Input = ({ name }: InputProps) => {
 	return (
 		<Box className={styles.inputWrapper}>
 			<InputMUI
+				data-testid={'input'}
 				sx={{ mb: 1 }}
 				placeholder="What needs to be done?"
 				name={name}
 				onChange={field.onChange}
 				value={field.value}
 			/>
-			<ErrorMessage name="todo" component={'div'} />
+			<ErrorMessage
+				data-testid={'errorMessage'}
+				name="todo"
+				component={'div'}
+			/>
 		</Box>
 	);
 };
