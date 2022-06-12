@@ -28,6 +28,7 @@ import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
 // 	],
 // };
 const initialState: IStore = {
+	// я не хотел выносить
 	activeTodosLeft: 0,
 	activeFilter: Filters.ALL,
 	todos: [],

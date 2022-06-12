@@ -1,15 +1,15 @@
-import TodoList from '../TodoList/TodoList';
-
-import styles from './app.module.css';
 import { Box, Container, Typography } from '@mui/material';
+
+import TodoList from '../TodoList/TodoList';
 import AddForm from '../AddForm/AddForm';
 import Controls from '../Controls/Controls';
-import store from '../../store/store';
+
 import { Provider } from 'react-redux';
-import { useState } from 'react';
+import store from '../../store/store';
+
+import styles from './app.module.css';
 
 function App() {
-	const [todosLeft, setTodosLeft] = useState(2);
 	return (
 		<Provider store={store}>
 			<Box className={styles.app}>
@@ -18,8 +18,8 @@ function App() {
 						Todos
 					</Typography>
 					<AddForm />
-					<TodoList setTodosLeft={setTodosLeft}></TodoList>
-					<Controls todosLeft={todosLeft} />
+					<TodoList></TodoList>
+					<Controls />
 				</Container>
 			</Box>
 		</Provider>

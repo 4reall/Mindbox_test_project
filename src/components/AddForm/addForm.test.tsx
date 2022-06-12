@@ -14,23 +14,19 @@ describe('Add form', () => {
 		await user.type(screen.getByTestId('input'), '12');
 		await user.click(screen.getByTestId('btn'));
 
-		await waitFor(() => {
-			expect(screen.getByTestId('errorMessage')).toBeInTheDocument();
-			expect(screen.getByTestId('errorMessage')).toHaveTextContent(
-				'Minimal length is 5 characters'
-			);
-		});
+		expect(screen.getByTestId('errorMessage')).toBeInTheDocument();
+		expect(screen.getByTestId('errorMessage')).toHaveTextContent(
+			'Minimal length is 5 characters'
+		);
 	});
 	it('should validate long value', async () => {
 		await user.type(screen.getByTestId('input'), '{a>101}');
 		await user.click(screen.getByTestId('btn'));
 
-		await waitFor(() => {
-			expect(screen.getByTestId('errorMessage')).toBeInTheDocument();
-			expect(screen.getByTestId('errorMessage')).toHaveTextContent(
-				'Maximal length is 100 characters'
-			);
-		});
+		expect(screen.getByTestId('errorMessage')).toBeInTheDocument();
+		expect(screen.getByTestId('errorMessage')).toHaveTextContent(
+			'Maximal length is 100 characters'
+		);
 	});
 	it('should be required', async () => {
 		await user.click(screen.getByTestId('btn'));
@@ -46,10 +42,6 @@ describe('Add form', () => {
 		await user.type(screen.getByTestId('input'), 'New todo');
 		await user.click(screen.getByTestId('btn'));
 
-		await waitFor(() => {
-			expect(screen.getAllByTestId('todo').length).toBe(
-				todoList.length + 1
-			);
-		});
+		expect(screen.getAllByTestId('todo').length).toBe(todoList.length + 1);
 	});
 });

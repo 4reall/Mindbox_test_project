@@ -6,21 +6,15 @@ import {
 	Typography,
 } from '@mui/material';
 
-import styles from './controls.module.css';
-import { useState, MouseEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { changeFilter, clearCompleted } from '../../store/reducers/todosSlice';
+
+import { MouseEvent } from 'react';
 import { Filters, IStore } from '../../types';
-import {
-	changeFilter,
-	clearCompleted,
-	updateActiveTodosLeft,
-} from '../../store/reducers/todosSlice';
 
-interface ControlsProps {
-	todosLeft: number;
-}
+import styles from './controls.module.css';
 
-const Controls = ({ todosLeft }: ControlsProps) => {
+const Controls = () => {
 	const { activeFilter, activeTodosLeft } = useSelector(
 		(state: IStore) => state
 	);
@@ -30,6 +24,7 @@ const Controls = ({ todosLeft }: ControlsProps) => {
 		event: MouseEvent<HTMLElement>,
 		newFilter: Filters
 	) => {
+		if (newFilter === null) return;
 		dispatch(changeFilter(newFilter));
 	};
 

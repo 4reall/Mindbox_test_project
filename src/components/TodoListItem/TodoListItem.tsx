@@ -4,19 +4,20 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Checkbox from '@mui/material/Checkbox';
 import ListItemText from '@mui/material/ListItemText';
 import ListItem from '@mui/material/ListItem';
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { toggleStatus } from '../../store/reducers/todosSlice';
 
 interface TodoListItemProps {
+	id: string;
 	value: string;
 	handleToggle: () => void;
 	checked: boolean;
 }
 
-const TodoListItem = ({ value, handleToggle, checked }: TodoListItemProps) => {
-	const labelId = `checkbox-list-label-${value}`;
-
+const TodoListItem = ({
+	id,
+	value,
+	handleToggle,
+	checked,
+}: TodoListItemProps) => {
 	return (
 		<ListItem
 			data-testid={'todo'}
@@ -33,10 +34,10 @@ const TodoListItem = ({ value, handleToggle, checked }: TodoListItemProps) => {
 						checked={checked}
 						tabIndex={-1}
 						disableRipple
-						inputProps={{ 'aria-labelledby': labelId }}
+						inputProps={{ 'aria-labelledby': id }}
 					/>
 				</ListItemIcon>
-				<ListItemText id={labelId} primary={value} />
+				<ListItemText id={id} primary={value} />
 			</ListItemButton>
 		</ListItem>
 	);

@@ -8,7 +8,7 @@ interface InputProps {
 }
 
 const Input = ({ name }: InputProps) => {
-	const [field, meta, helpers] = useField(name);
+	const [field] = useField(name);
 	return (
 		<Box className={styles.inputWrapper}>
 			<InputMUI

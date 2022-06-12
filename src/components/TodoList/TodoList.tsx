@@ -1,22 +1,16 @@
-import { SetStateAction, useState } from 'react';
 import List from '@mui/material/List';
-import TodoListItem from '../TodoListItem/TodoListItem';
-import { Divider, Typography } from '@mui/material';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { Filters, IStore, ITodo } from '../../types';
 import {
 	toggleStatus,
 	updateActiveTodosLeft,
 } from '../../store/reducers/todosSlice';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
-import styles from './todoList.module.css';
+import { IStore } from '../../types';
 
-interface TodoListProps {
-	setTodosLeft: (todosLeft: number) => void;
-}
+import Todos from './Todos';
 
-const TodoList = ({ setTodosLeft }: TodoListProps) => {
+const TodoList = () => {
 	const { activeFilter, todos } = useSelector((state: IStore) => state);
 	const dispatch = useDispatch();
 
@@ -24,59 +18,6 @@ const TodoList = ({ setTodosLeft }: TodoListProps) => {
 		dispatch(toggleStatus(id));
 		dispatch(updateActiveTodosLeft());
 	};
-
-	const render = (todos: ITodo[]) => {
-		const filteredTodos = todos.filter(
-			(todo) =>
-				activeFilter === Filters.ALL ||
-				(todo.completed && activeFilter === Filters.COMPLETED) ||
-				(!todo.completed && activeFilter === Filters.ACTIVE)
-		);
-
-		if (filteredTodos.length === 0) {
-			return (
-				<CSSTransition
-					exit={false}
-					timeout={500}
-					classNames={{
-						enter: styles.todoEnter,
-						enterActive: styles.todoEnterActive,
-						exit: styles.todoExit,
-						exitActive: styles.todoExitActive,
-					}}
-				>
-					<Typography variant="h4" component="div" align="center">
-						There are no todos here
-					</Typography>
-				</CSSTransition>
-			);
-		}
-
-		return filteredTodos.map(({ id, value, completed }) => (
-			<CSSTransition
-				exit={false}
-				key={id}
-				timeout={500}
-				classNames={{
-					enter: styles.todoEnter,
-					enterActive: styles.todoEnterActive,
-					exit: styles.todoExit,
-					exitActive: styles.todoExitActive,
-				}}
-			>
-				<>
-					<TodoListItem
-						value={value}
-						handleToggle={handleToggle(id)}
-						checked={completed}
-					/>
-					<Divider />
-				</>
-			</CSSTransition>
-		));
-	};
-
-	const view = render(todos);
 
 	return (
 		<List
@@ -89,7 +30,11 @@ const TodoList = ({ setTodosLeft }: TodoListProps) => {
 				overflow: 'scroll',
 			}}
 		>
-			<TransitionGroup>{render(todos)}</TransitionGroup>
+			<Todos
+				todos={todos}
+				activeFilter={activeFilter}
+				handleToggle={handleToggle}
+			/>
 		</List>
 	);
 };
