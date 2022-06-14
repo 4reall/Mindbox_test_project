@@ -12,6 +12,9 @@ interface TodosProps {
 }
 
 const Todos = ({ todos, activeFilter, handleToggle }: TodosProps) => {
+	// Возможно условие фильтрации можно улучшить, но я не нашел оптимального решения.
+	// Так если заменить значение свойства completed типа bool на тип Filters, то усложнится
+	// проверка в редюсере.
 	const filteredTodos = todos.filter(
 		(todo) =>
 			activeFilter === Filters.ALL ||
