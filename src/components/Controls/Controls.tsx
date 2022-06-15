@@ -7,17 +7,23 @@ import {
 } from '@mui/material';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { changeFilter, clearCompleted } from '../../store/reducers/todosSlice';
+import {
+	changeFilter,
+	clearCompletedTodos,
+	selectAllTodos,
+} from '../../store/reducers/todosSlice';
+import store from '../../store/store';
 
 import { MouseEvent } from 'react';
-import { Filters, IStore } from '../../types';
+import { Filters, RootState } from '../../types';
 
 import styles from './controls.module.css';
 
 const Controls = () => {
 	const { activeFilter, activeTodosLeft } = useSelector(
-		(state: IStore) => state
+		(state: RootState) => state
 	);
+	const todos = selectAllTodos(store.getState());
 	const dispatch = useDispatch();
 
 	const handleChange = (
@@ -26,6 +32,10 @@ const Controls = () => {
 	) => {
 		if (newFilter === null) return;
 		dispatch(changeFilter(newFilter));
+	};
+
+	const handleClick = () => {
+		dispatch(clearCompletedTodos(todos));
 	};
 
 	return (
@@ -46,9 +56,7 @@ const Controls = () => {
 				<ToggleButton value={Filters.ACTIVE}>Active</ToggleButton>
 				<ToggleButton value={Filters.COMPLETED}>Completed</ToggleButton>
 			</ToggleButtonGroup>
-			<Button onClick={() => dispatch(clearCompleted())}>
-				Clear Completed
-			</Button>
+			<Button onClick={handleClick}>Clear Completed</Button>
 		</Box>
 	);
 };

@@ -1,22 +1,31 @@
 import List from '@mui/material/List';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
+	filteredTodosSelector,
+	selectTodoById,
 	toggleStatus,
 	updateActiveTodosLeft,
 } from '../../store/reducers/todosSlice';
+import store from '../../store/store';
 
-import { IStore } from '../../types';
+import { Actions } from '../../types';
 
 import Todos from './Todos';
 
 const TodoList = () => {
-	const { activeFilter, todos } = useSelector((state: IStore) => state);
+	const filteredTodos = filteredTodosSelector(store.getState());
 	const dispatch = useDispatch();
 
 	const handleToggle = (id: string) => () => {
-		dispatch(toggleStatus(id));
-		dispatch(updateActiveTodosLeft());
+		const todo = selectTodoById(store.getState(), id);
+		if (!todo) return;
+		dispatch(toggleStatus(todo));
+		dispatch(
+			// если задача активна, то при переключении ее статуса количество
+			// активных задач должно уменьшиться и наоборот
+			updateActiveTodosLeft(!todo.isCompleted ? Actions.DEC : Actions.INC)
+		);
 	};
 
 	return (
@@ -30,11 +39,7 @@ const TodoList = () => {
 				overflow: 'scroll',
 			}}
 		>
-			<Todos
-				todos={todos}
-				activeFilter={activeFilter}
-				handleToggle={handleToggle}
-			/>
+			<Todos todos={filteredTodos} handleToggle={handleToggle} />
 		</List>
 	);
 };

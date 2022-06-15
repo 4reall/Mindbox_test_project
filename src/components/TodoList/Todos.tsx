@@ -1,28 +1,17 @@
 import { Divider, Typography } from '@mui/material';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import TodoListItem from '../TodoListItem/TodoListItem';
-import { Filters, ITodo } from '../../types';
+import { ITodo } from '../../types';
 
 import styles from './todoList.module.css';
 
 interface TodosProps {
 	todos: ITodo[];
-	activeFilter: Filters;
 	handleToggle: (id: string) => () => void;
 }
 
-const Todos = ({ todos, activeFilter, handleToggle }: TodosProps) => {
-	// Возможно условие фильтрации можно улучшить, но я не нашел оптимального решения.
-	// Так если заменить значение свойства completed типа bool на тип Filters, то усложнится
-	// проверка в редюсере.
-	const filteredTodos = todos.filter(
-		(todo) =>
-			activeFilter === Filters.ALL ||
-			(todo.completed && activeFilter === Filters.COMPLETED) ||
-			(!todo.completed && activeFilter === Filters.ACTIVE)
-	);
-
-	if (filteredTodos.length === 0) {
+const Todos = ({ todos, handleToggle }: TodosProps) => {
+	if (todos.length === 0) {
 		return (
 			<CSSTransition
 				exit={false}
@@ -41,7 +30,7 @@ const Todos = ({ todos, activeFilter, handleToggle }: TodosProps) => {
 		);
 	}
 
-	const list = filteredTodos.map(({ id, value, completed }) => (
+	const todosList = todos.map(({ id, value, isCompleted }) => (
 		<CSSTransition
 			exit={false}
 			key={id}
@@ -58,13 +47,13 @@ const Todos = ({ todos, activeFilter, handleToggle }: TodosProps) => {
 					id={id}
 					value={value}
 					handleToggle={handleToggle(id)}
-					checked={completed}
+					checked={isCompleted}
 				/>
 				<Divider />
 			</>
 		</CSSTransition>
 	));
-	return <TransitionGroup>{list}</TransitionGroup>;
+	return <TransitionGroup>{todosList}</TransitionGroup>;
 };
 
 export default Todos;

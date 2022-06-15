@@ -2,13 +2,15 @@ import { Button as ButtonMUI } from '@mui/material';
 import { Form, Formik } from 'formik';
 import Input from '../UI/Input/Input';
 
-import { string, object } from 'yup';
+import { object, string } from 'yup';
 
 import { useDispatch } from 'react-redux';
 import {
 	addTodo,
 	updateActiveTodosLeft,
 } from '../../store/reducers/todosSlice';
+
+import { Actions } from '../../types';
 
 import styles from './addForm.module.css';
 
@@ -19,7 +21,7 @@ const AddForm = () => {
 			initialValues={{ todo: '' }}
 			onSubmit={(values, formikHelpers) => {
 				dispatch(addTodo(values.todo));
-				dispatch(updateActiveTodosLeft());
+				dispatch(updateActiveTodosLeft(Actions.INC));
 				formikHelpers.resetForm();
 			}}
 			validationSchema={object({
